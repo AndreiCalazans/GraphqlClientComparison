@@ -119,10 +119,28 @@ All must render the **identical UI/UX** and exercise identical scenarios.
 - [x] Live-price WS layer (shared transport, per-variant subscription glue).
 - [x] Wire Hermes profiler plugin (copied withColdStartProfiling) + JS-side
       coldStartProfiling scheduler. Variant chosen via EXPO_PUBLIC_DATA_LAYER.
-- [ ] Build release APK.
-- [ ] Write 3 Maestro flows × 6 variants; orchestrator script.
-- [ ] Run all, collect Flashlight JSON + Hermes cpuprofiles + videos.
-- [ ] Analyze CPU samples; aggregate; write FINDINGS.md.
+- [x] Build release APK (single binary, all 6 variants, deep-link selection).
+- [x] Write 3 Maestro flows × 6 variants (gen-flows.mjs); orchestrator
+      (run-one.mjs / run-all.mjs). Fixed cold-start variant selection
+      (clearState + stopApp + openLink; a plain launchApp booted the default).
+- [x] Run all 6×3=18 cases (3 Maestro iters each): Flashlight JSON + source-
+      mapped Hermes cpuprofiles + videos in results/<variant>__<test>/.
+- [x] Analyze: aggregate.mjs (Flashlight FPS/RAM/JS-CPU + Hermes self-time by
+      node_module) -> results/SUMMARY.md + summary.json. Wrote FINDINGS.md,
+      updated README with the answer.
+
+## RESULT (see FINDINGS.md)
+- Data layer is NOT an FPS (all ~60) or RAM (~254-261MB band) differentiator on
+  the A16. It's a JS-thread CPU cost, proportional to per-write work.
+- JS-CPU ordering (Flashlight mqt_v_js delta vs vanilla AND Hermes lib self-time
+  agree): RTK > TanStack ~ Relay > Zustand ~ Jotai ~ Vanilla.
+- Hermes lib self-time (sum t1-t3): RTK 1606ms (immer+reduxjs+reselect),
+  TanStack 425ms, Relay 308ms, Zustand 33ms, Jotai 18ms, Vanilla 0.
+- Trap: routing live-price ticks through Immer/reselect (RTK) or deep structural
+  sharing (TanStack) recurs per tick. Keep hot data on a light external store.
+- Hermes profiler enabled in MainApplication.onCreate -> captures from first
+  bundle module load (early frames present; confirmed span 20.2s from
+  setUpDefaultReactNativeEnvironment/metroRequire).
 
 ## Log
 - (init) Studied refs; verified public GQL API for all 5 section filters + asset

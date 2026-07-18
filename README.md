@@ -5,6 +5,29 @@ side performance. We want to make an informed decision of how much certain
 features cost for performance in a React Native app against a low end Samsung
 device. 
 
+## Answer
+
+See **[FINDINGS.md](./FINDINGS.md)** for the full methodology, data and analysis.
+
+TL;DR (Samsung Galaxy A16, release build, New Arch, median of 3 Maestro runs):
+the data layer is **not** an FPS or memory problem (all six held ~60 FPS within a
+~7 MB RAM band) — it's a **JS-thread CPU** problem, and the ordering is:
+
+> **Redux Toolkit (RTK Query) > TanStack Query ≈ Relay > Zustand ≈ Jotai ≈ Vanilla**
+
+RTK is the heaviest (Immer produce + reducer + reselect on *every* cache write,
+including every live-price tick); TanStack/Relay add moderate normalization/
+observer cost; **Zustand and Jotai are within noise of hand-rolled vanilla.** The
+biggest trap is routing high-frequency live prices through a heavy store — keep
+ticking data on a minimal `useSyncExternalStore`-style channel.
+
+Reproducible harness in `harness/`, Maestro flows in `maestro/`, orchestration in
+`scripts/`, raw Flashlight JSON + source-mapped Hermes profiles + videos in
+`results/`. Progress log in `RESEARCH_MEMORY.md`.
+
+---
+
+
 # What to Compare
 
 Using Coinbase's GraphQL public APIs. We will build multiple data layer
