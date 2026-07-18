@@ -1,5 +1,7 @@
 # What's the Cost of a GraphQL Client When Performance Matters?
 
+[Post published here.](https://andrei-calazans.com/posts/2026-07-18-cost-of-graphql-client-server-state/)
+
 This repo researches the cost of GraphQL clients and how they can impact client
 side performance. We want to make an informed decision of how much certain
 features cost for performance in a React Native app against a low end Samsung
