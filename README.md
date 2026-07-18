@@ -1,0 +1,58 @@
+# What's the Cost of a GraphQL Client When Performance Matters?
+
+This repo researches the cost of GraphQL clients and how they can impact client
+side performance. We want to make an informed decision of how much certain
+features cost for performance in a React Native app against a low end Samsung
+device. 
+
+# What to Compare
+
+Using Coinbase's GraphQL public APIs. We will build multiple data layer
+solutions and compare their JavaScript CPU cost. 
+
+
+Data layer solutions to compare:
+
+- Relay
+- Tanstack Query
+- Redux Tool Kit. 
+- Vanilla JS solution
+- Pure Zustand
+- Pure Jotai
+
+The Comparable Cases:
+
+All solutions will tested in the following scenarios:
+
+- When signed in Home will display total user balance. If not signed in don't
+  display this.
+- Home screen that renders 5 sections. Sections are 4 Watchlist items, 4 TOP_GAINERS, 4 TOP_LOSERS, 4 TOP_MOVERS, 4 RECENTLY_LISTED.
+- Navigate to an asset screen. On press on asset we view an asset detail with
+  description, buy/sell volume, and whatever information available.
+- Asset screen will support adding and removing item from watchlist.
+- Live price updates of all shown data.
+- Sign in experience.
+
+# Requirements of our test
+
+1. The UI and user experience must be identical. 
+2. The test will be driven by Maestro CLI program to do the e2e test.
+3. Use Flashlight (https://github.com/bamlab/flashlight) to memory and FPS data,
+   output as json for each run.
+4. Run the HermesSamplingProfiler to capture sampling data so we can later do an
+   analysis of the CPU samples.
+5. Use Meastro to capture videos of each run
+
+
+
+# UI e2e Tests
+
+
+1. Open the app. Navigate to the first asset in the TOP GAINERS. Wait to load.
+   Then navigate back to home.
+2. Open the app. Scroll all the way down. Press on the last asset available. 
+3. (AUTHED session required). Open the app. Press on the first asset in TOP
+   losers. Add to watchlist. Go back. Confirm asset is in our watchlist. Then
+   press the asset again. Unwatch. Go back. Confirm watchlist is empty.
+
+Every e2e test captures the Flashlist data plus the Hermes CPU sample.
