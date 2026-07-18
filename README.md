@@ -90,19 +90,3 @@ All solutions will tested in the following scenarios:
 
 Every e2e test captures the Flashlist data plus the Hermes CPU sample.
 
-
-# Helpers
-
-Use the branch rewrite/native-first-validation in ~/coinbase/mobile_two
-(src/packages/app/src/rewrite/RewriteApp.tsx) as an example on how to setup the
-GraphQL queries to access the Coinbase APIs.
-
-In ~/dev/StateOfReactNativeNavigation we have a setup for profiling the app with
-systrace and hermes sampling profiler. Use only the hermes sampling profiler
-since this is only for the JavaScript thread. 
-
-There is an example here https://github.com/cortinico/repro-36296 on how we can
-setup Maestro alongside Flashlight.
-
-In ~/dev/react-native-animation-performance/* we have a base React Native setup
-that you can replicate.
