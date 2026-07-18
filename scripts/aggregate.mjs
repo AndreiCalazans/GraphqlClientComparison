@@ -31,13 +31,15 @@ const TEST_NAME = {
   t3: 'Auth → loser[0] → watch/unwatch',
 };
 
-// Library frame signatures for the Hermes self-time attribution.
-const LIB_SIGNATURES = {
-  tanstack: [/@tanstack/, /query-core/, /react-query/],
-  rtk: [/@reduxjs/, /redux-toolkit/, /\breduxjs\b/, /immer/, /reselect/, /react-redux/],
-  zustand: [/zustand/],
-  jotai: [/jotai/],
-  relay: [/relay-runtime/, /react-relay/, /relay/i],
+// node_module names that belong to each variant's data-layer library. The
+// Hermes sampler tags every frame with args.node_module, so self-time can be
+// attributed to the library precisely.
+const LIB_MODULES = {
+  tanstack: ['@tanstack'],
+  rtk: ['@reduxjs', 'react-redux', 'immer', 'reselect', 'redux'],
+  zustand: ['zustand'],
+  jotai: ['jotai'],
+  relay: ['relay-runtime', 'react-relay'],
   vanilla: [],
 };
 
@@ -108,39 +110,65 @@ function summarizeFlashlight(file) {
 }
 
 /**
- * From the source-mapped Hermes chrome-trace, sum self-time (µs) for frames
- * whose url/name matches this variant's library signatures. Returns µs of
- * self-time attributed to the data-layer library.
+ * From the source-mapped Hermes chrome-trace (B/E phase events), reconstruct
+ * per-frame SELF time by walking the call stack: at any instant the top frame
+ * on the stack accrues wall time. We then sum self-time by node_module and
+ * attribute the variant's library modules. Returns µs (self) for the library,
+ * total sampled JS self-time, and a breakdown of the biggest modules.
  */
 function summarizeHermes(file, variant) {
   if (!existsSync(file)) return null;
-  let d;
+  let events;
   try {
-    d = JSON.parse(readFileSync(file, 'utf8'));
+    const d = JSON.parse(readFileSync(file, 'utf8'));
+    events = Array.isArray(d) ? d : d.traceEvents || [];
   } catch {
     return null;
   }
-  const sigs = LIB_SIGNATURES[variant] || [];
-  // chrome trace: events with ph 'X' (complete) OR the cpuprofile nodes format.
-  const events = Array.isArray(d) ? d : d.traceEvents || [];
+  // Only B/E events, sorted by ts, grouped per thread (tid).
+  const be = events
+    .filter((e) => e.ph === 'B' || e.ph === 'E')
+    .sort((a, b) => a.ts - b.ts);
+  const selfByModule = {};
+  const stacks = {}; // tid -> array of {mod, ts}
+  let prevTs = null;
+  // Accrue elapsed time to the current top-of-stack frame across ALL threads.
+  // Since Hermes samples one JS thread, treat the union timeline.
+  for (let i = 0; i < be.length; i++) {
+    const e = be[i];
+    const tid = e.tid ?? 0;
+    if (prevTs != null) {
+      const dt = e.ts - prevTs;
+      if (dt > 0) {
+        // charge dt to the current top frame of the thread that was executing
+        const st = stacks[tid] || [];
+        const top = st[st.length - 1];
+        const mod = top ? top.mod : '(idle)';
+        selfByModule[mod] = (selfByModule[mod] || 0) + dt;
+      }
+    }
+    if (!stacks[tid]) stacks[tid] = [];
+    if (e.ph === 'B') {
+      stacks[tid].push({ mod: e.args?.node_module || '(unknown)', ts: e.ts });
+    } else {
+      stacks[tid].pop();
+    }
+    prevTs = e.ts;
+  }
+  const libMods = LIB_MODULES[variant] || [];
   let libSelfUs = 0;
   let totalUs = 0;
-  const sampleName = (e) => {
-    const n = e.name || '';
-    const url = e.args?.data?.url || e.args?.url || '';
-    return `${n} ${url}`;
-  };
-  // Complete events with dur = self approximation isn't exact; we instead count
-  // by matching frame names present. Fall back to counting event durations.
-  for (const e of events) {
-    if (e.ph !== 'X' && e.ph !== 'B') continue;
-    const dur = Number(e.dur || 0);
-    if (!dur) continue;
-    totalUs += dur;
-    const label = sampleName(e);
-    if (sigs.some((re) => re.test(label))) libSelfUs += dur;
+  for (const [mod, us] of Object.entries(selfByModule)) {
+    if (mod === '(idle)') continue;
+    totalUs += us;
+    if (libMods.some((m) => mod === m || mod.startsWith(m + '/'))) libSelfUs += us;
   }
-  return { libSelfUs, totalUs, events: events.length };
+  const top = Object.entries(selfByModule)
+    .filter(([m]) => m !== '(idle)')
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8)
+    .map(([m, us]) => ({ module: m, ms: +(us / 1000).toFixed(1) }));
+  return { libSelfUs, totalUs, events: events.length, topModules: top };
 }
 
 const summary = {};

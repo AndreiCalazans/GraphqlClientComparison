@@ -1,0 +1,194 @@
+{
+  "vanilla": {
+    "t1": {
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 24902.379083156586,
+        "fpsMin": 55.45411318938703,
+        "fpsMean": 59.858310568175476,
+        "ramMean": 257.956484375,
+        "ramMax": 281.39453125,
+        "jsCpuMean": 7.288168104735961,
+        "jsCpuMax": 24.04809619238477,
+        "uiCpuMean": 23.02552316211965,
+        "renderCpuMean": 5.343720435209589,
+        "totalCpuMean": 49.977492086828434
+      },
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 778
+      }
+    },
+    "t2": {
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 23433.716832876205,
+        "fpsMin": 42.31827111984283,
+        "fpsMean": 59.41701030982439,
+        "ramMean": 257.84873670212767,
+        "ramMax": 278.86328125,
+        "jsCpuMean": 6.826271084875778,
+        "jsCpuMax": 26.369168356997974,
+        "uiCpuMean": 25.189572601793518,
+        "renderCpuMean": 9.585663071202818,
+        "totalCpuMean": 55.60717083383227
+      },
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 1080
+      }
+    },
+    "t3": {
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 79493.41912484169,
+        "fpsMin": 41.13948919449902,
+        "fpsMean": 59.74567761762427,
+        "ramMean": 258.78127456761007,
+        "ramMax": 278.5234375,
+        "jsCpuMean": 4.366191688368101,
+        "jsCpuMax": 23.25581395348837,
+        "uiCpuMean": 21.715989810741462,
+        "renderCpuMean": 4.305669452476279,
+        "totalCpuMean": 37.802423488399434
+      },
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 980
+      }
+    }
+  },
+  "tanstack": {
+    "t1": {
+      "flashlight": null,
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 842
+      }
+    },
+    "t2": {
+      "flashlight": null,
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 1392
+      }
+    },
+    "t3": {
+      "flashlight": null,
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 948
+      }
+    }
+  },
+  "rtk": {
+    "t1": {
+      "flashlight": null,
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 1348
+      }
+    },
+    "t2": {
+      "flashlight": null,
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 638
+      }
+    },
+    "t3": {
+      "flashlight": null,
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 1130
+      }
+    }
+  },
+  "zustand": {
+    "t1": {
+      "flashlight": null,
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 1094
+      }
+    },
+    "t2": {
+      "flashlight": null,
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 1138
+      }
+    },
+    "t3": {
+      "flashlight": null,
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 986
+      }
+    }
+  },
+  "jotai": {
+    "t1": {
+      "flashlight": null,
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 1262
+      }
+    },
+    "t2": {
+      "flashlight": null,
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 1100
+      }
+    },
+    "t3": {
+      "flashlight": null,
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 1004
+      }
+    }
+  },
+  "relay": {
+    "t1": {
+      "flashlight": null,
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 974
+      }
+    },
+    "t2": {
+      "flashlight": null,
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 1150
+      }
+    },
+    "t3": {
+      "flashlight": null,
+      "hermes": {
+        "libSelfUs": 0,
+        "totalUs": 0,
+        "events": 1186
+      }
+    }
+  }
+}
