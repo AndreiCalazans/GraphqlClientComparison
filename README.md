@@ -16,10 +16,18 @@ the data layer is **not** an FPS or memory problem (all six held ~60 FPS within 
 > **Redux Toolkit (RTK Query) > TanStack Query ≈ Relay > Zustand ≈ Jotai ≈ Vanilla**
 
 RTK is the heaviest (Immer produce + reducer + reselect on *every* cache write,
-including every live-price tick); TanStack/Relay add moderate normalization/
-observer cost; **Zustand and Jotai are within noise of hand-rolled vanilla.** The
-biggest trap is routing high-frequency live prices through a heavy store — keep
-ticking data on a minimal `useSyncExternalStore`-style channel.
+including every live-price tick — 3218 ms of library self-time vs TanStack 904 ms,
+Relay 804 ms, Zustand 277 ms, Jotai 122 ms, Vanilla 0); **Zustand and Jotai are
+within noise of hand-rolled vanilla.** The biggest trap is routing high-frequency
+live prices through a heavy store — keep ticking data on a minimal
+`useSyncExternalStore`-style channel.
+
+**Important caveat on FPS:** FPS looks flat (~60) across all variants *only
+because this harness is a lightweight app whose JS thread is mostly idle*. In a
+real, busy app many things share the single JS thread; the extra JS-CPU a heavy
+data layer burns per update then competes with rendering/gestures, the thread
+saturates, and the app becomes janky/unresponsive. **JS-CPU cost is the metric
+that predicts real-world responsiveness** — not the FPS of a near-idle demo.
 
 Reproducible harness in `harness/`, Maestro flows in `maestro/`, orchestration in
 `scripts/`, raw Flashlight JSON + source-mapped Hermes profiles + videos in

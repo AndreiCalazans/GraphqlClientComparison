@@ -67,10 +67,15 @@ delta is the marginal cost of the library, not of the network or parsing.
 3. **Hermes sampling profiler** is enabled in `MainApplication.onCreate` (via the
    `withColdStartProfiling` Expo config plugin) so it captures **from the first
    bundle module load onward** — early module init + first render are in the
-   trace, not just steady state. `react-native-release-profiler`'s
-   `stopProfiling(true)` dumps the `.cpuprofile` ~20 s after JS entry (the flow
-   finishes inside that window). The trace is source-mapped and self-time is
-   attributed per `node_module`.
+   trace, not just steady state. The trace is **stopped by a UI button** the
+   Maestro flow taps at the very end of each test (`btn-stop-profiler`), which
+   calls `react-native-release-profiler`'s `stopProfiling(true)`; the flow then
+   asserts the on-screen `profiler-done` marker (flipped only after the file is
+   written) before finishing, so the host pulls a fully-written profile. This
+   replaced an earlier fixed 20 s timeout that **truncated the long T3 flow**
+   (~80 s) and lost most of its samples — with the button, T3 now yields
+   ~70–100 s / thousands of events instead of a 20 s slice. The trace is
+   source-mapped and self-time is attributed per `node_module`.
 4. **Maestro video** of one clean run per case (`results/<case>/video.mp4`).
 
 Orchestration: `scripts/run-one.mjs` (one case) and `scripts/run-all.mjs`
@@ -88,44 +93,60 @@ Orchestration: `scripts/run-one.mjs` (one case) and `scripts/run-all.mjs`
 
 ## Results
 
-### JS-thread CPU (the differentiator)
+### Hermes self-time attributed to the data-layer library (primary metric)
 
-Average `mqt_v_js` CPU (% of one core) over each flow, and the **delta vs the
-vanilla baseline** — i.e. the marginal JS CPU the library adds:
+With the full-window capture (profiler stopped by the flow's button, not a 20 s
+timeout), this is the cleanest signal: the wall time the sampler caught actually
+executing **inside each library's own `node_module`s** (idle / network wait
+excluded). Summed across all three flows:
 
-| Variant | T1 | Δ | T2 | Δ | T3 | Δ |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Vanilla JS | 6.2% | — | 7.0% | — | 4.3% | — |
-| TanStack Query | 8.8% | +2.6 | 8.0% | +1.0 | 4.8% | +0.5 |
-| Redux Toolkit | 11.3% | **+5.1** | 9.7% | **+2.8** | 5.8% | **+1.4** |
-| Zustand | 7.7% | +1.5 | 7.4% | +0.4 | 4.4% | +0.1 |
-| Jotai | 8.4% | +2.1 | 6.6% | −0.3 | 4.5% | +0.2 |
-| Relay | 10.2% | +3.9 | 9.0% | +2.0 | 5.2% | +0.9 |
+| Variant | library self-time | share of active JS | dominant frames |
+| --- | ---: | ---: | --- |
+| Vanilla JS | 0 ms | 0.00% | (none — no library) |
+| Jotai | 122 ms | 0.10% | `jotai` atom reads/writes |
+| Zustand | 277 ms | 0.18% | `zustand` selector notify |
+| Relay | 804 ms | 0.62% | `relay-runtime` normalization/store |
+| TanStack Query | 904 ms | 0.75% | `@tanstack` observer + structural sharing |
+| Redux Toolkit | **3218 ms** | **2.73%** | `immer` (produce) + `@reduxjs` reducer + `reselect` |
 
-**Redux Toolkit is consistently the most JS-CPU-hungry** data layer, followed by
-Relay and TanStack. Zustand and Jotai are within measurement noise of vanilla.
+Broken down per test (ms of library self-time) — note how the cost concentrates
+in **T3**, the longest flow and the one with the most **live-price ticks**
+flowing through the store:
 
-### Hermes self-time attributed to the data-layer library
+| Variant | T1 | T2 | T3 (auth + live ticks) |
+| --- | ---: | ---: | ---: |
+| Vanilla JS | 0 | 0 | 0 |
+| Jotai | 50 | 35 | 37 |
+| Zustand | 72 | 36 | 169 |
+| Relay | 202 | 120 | 482 |
+| TanStack Query | 320 | 90 | 494 |
+| Redux Toolkit | 697 | 587 | **1934** |
 
-Summed across the three flows, this is the wall time the sampler caught actually
-executing inside each library's own modules (idle/network wait excluded):
+RTK is an order of magnitude heavier than the atom stores because every cache
+write — including **every coalesced live-price tick** — runs an Immer `produce`
+(copy-on-write draft + finalize), the RTK Query reducer, and reselect
+recomputation. In RTK's T3 profile the top library frames are `immer` (702 ms),
+`@reduxjs` (629 ms), `redux` (341 ms) and `reselect` (221 ms). TanStack pays
+structural sharing (`replaceEqualDeep`) + observer notification; Relay pays
+response normalization into its record store. Zustand and Jotai just call `set()`
+/ write an atom — near-zero.
 
-| Variant | library self-time | dominant frames |
-| --- | ---: | --- |
-| Vanilla JS | 0 ms | (none — no library) |
-| Jotai | 18 ms | `jotai` atom reads/writes |
-| Zustand | 33 ms | `zustand` selector notify |
-| Relay | 308 ms | `relay-runtime` normalization/store |
-| TanStack Query | 425 ms | `@tanstack` observer + structural sharing |
-| Redux Toolkit | **1606 ms** | `immer` (produce) + `@reduxjs` reducer + `reselect` |
+### JS-thread CPU (corroborating, but noisier)
 
-This independent signal **agrees with the Flashlight JS-CPU ordering**: RTK is an
-order of magnitude heavier than the atom stores, because every cache write —
-including **every coalesced live-price tick** — runs an Immer `produce` (a
-copy-on-write draft + finalize), the RTK Query reducer, and reselect
-recomputation. TanStack pays structural sharing (`replaceEqualDeep`) + observer
-notification; Relay pays response normalization into its record store. Zustand
-and Jotai just call `set()` / write an atom.
+Flashlight's average `mqt_v_js` CPU (% of one core) over each **whole** flow.
+This is a blunter instrument here: the flow averages include the long idle waits
+(network round-trips, the T3 watch/unwatch pauses), which dilute the brief
+library bursts, and network timing varies run to run. It confirms the ordering
+directionally but the Hermes self-time above is the reliable measure.
+
+| Variant | T1 | T2 | T3 |
+| --- | ---: | ---: | ---: |
+| Vanilla JS | 8.8% | 7.6% | 9.0% |
+| TanStack Query | 9.2% | 5.7% | 7.2% |
+| Redux Toolkit | 9.9% | 9.9% | 8.3% |
+| Zustand | 9.5% | 8.6% | 8.5% |
+| Jotai | 7.4% | 6.9% | 7.0% |
+| Relay | 9.7% | 7.7% | 7.9% |
 
 ### FPS and RAM (not differentiators)
 
@@ -144,6 +165,22 @@ and are **not** correlated with the data layer. RAM sits in a ~254–261 MB band
 difference is small and partly an artifact of all six libraries being bundled
 into the single binary (so the shared baseline dominates; the per-variant delta
 is what the numbers above isolate).
+
+> **⚠️ Do not read "FPS is unaffected" as "the data layer is free."** This harness
+> is a deliberately *lightweight* app: the JS thread is mostly idle (waiting on
+> the network), so even the heaviest data layer has plenty of headroom and frames
+> still land on time. In a **real, busy app** — many mounted screens, analytics,
+> a large component tree, feature providers, animations, and high-frequency data
+> all sharing the single JS thread — that headroom is gone. There, the extra
+> JS-CPU a heavy data layer burns **on every update** (e.g. RTK's per-tick Immer
+> produce) competes directly with rendering and gesture handling: the JS thread
+> saturates, `requestAnimationFrame` callbacks and touch responses queue up
+> behind it, and the app feels **janky and unresponsive** even though a
+> micro-benchmark like this one shows "60 FPS." **JS-CPU cost is the metric that
+> matters** precisely because it is the resource that runs out first under real
+> load — FPS only looks flat here because nothing else is contending for the
+> thread. Treat the JS-CPU / library-self-time numbers above as the leading
+> indicator of how a variant will behave once your app is doing real work.
 
 Full per-test tables: [`results/SUMMARY.md`](results/SUMMARY.md).
 
@@ -199,6 +236,11 @@ cache write.**
 - The Hermes sampler is statistical; short bursty work (initial normalization)
   can be under- or over-counted run to run. We cross-check it against Flashlight's
   independent per-thread CPU, and the two agree on ordering.
+- The profiler is now stopped by a UI button the flow taps at the end of each
+  test, so the FULL test window is captured (an earlier fixed 20 s timeout
+  truncated the ~80 s T3 flow and undercounted every variant — the corrected
+  library self-times are ~2× higher and, importantly, reveal the recurring
+  per-live-tick cost in T3 that the truncated run missed entirely).
 - Numbers are medians of 3 Maestro iterations per case on one device; treat
   single-point differences < ~1% JS CPU as noise.
 

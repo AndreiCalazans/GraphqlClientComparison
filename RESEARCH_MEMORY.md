@@ -142,6 +142,27 @@ All must render the **identical UI/UX** and exercise identical scenarios.
   bundle module load (early frames present; confirmed span 20.2s from
   setUpDefaultReactNativeEnvironment/metroRequire).
 
+## FOLLOW-UP (reviewer feedback)
+- BUG the reviewer caught: the Hermes profiler stopped on a fixed 20s timeout,
+  truncating the long T3 flow (~80s) -> we lost most of T3's samples.
+- FIX: replaced timeout with a UI stop-profiler button (ProfilerControl.tsx,
+  perf/coldStartProfiling.ts stopProfiler()). Maestro flow taps btn-stop-profiler
+  at the end of each test and asserts `profiler-done` (flips only after
+  stopProfiling(true) resolves + file on disk; native toast follows ~1s). Host
+  pulls a fully-written file. run-one.mjs screenrecord --time-limit bumped 60->180.
+- Re-ran full 6x3 matrix. T3 profiles now span 70-100s (was 20s); RTK t3 has
+  10368 events (was truncated). Library self-times ~2x higher & cleaner:
+  RTK 3218ms (immer 702 + reduxjs 629 + redux 341 + reselect 221, mostly in T3
+  from per-live-tick store writes), TanStack 904, Relay 804, Zustand 277,
+  Jotai 122, Vanilla 0. Ordering unchanged, now clearer.
+- ADDED FPS caveat (reviewer point): FPS flat ~60 ONLY because this app is
+  lightweight/JS-idle. In a busy app a saturated JS thread -> unresponsive app;
+  JS-CPU cost is the real-world predictor, not demo FPS. Documented in
+  FINDINGS.md + README.
+- Hermes self-time is now the PRIMARY metric (full-window, isolates library);
+  Flashlight whole-flow JS-CPU avg is noisier (idle waits dilute bursts) ->
+  demoted to corroborating.
+
 ## Log
 - (init) Studied refs; verified public GQL API for all 5 section filters + asset
   detail; introspection disabled (schema.graphql available). Installed Flashlight.
