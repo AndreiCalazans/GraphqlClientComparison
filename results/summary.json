@@ -3,191 +3,903 @@
     "t1": {
       "flashlight": {
         "iterations": 3,
-        "durationMs": 24902.379083156586,
-        "fpsMin": 55.45411318938703,
-        "fpsMean": 59.858310568175476,
-        "ramMean": 257.956484375,
-        "ramMax": 281.39453125,
-        "jsCpuMean": 7.288168104735961,
-        "jsCpuMax": 24.04809619238477,
-        "uiCpuMean": 23.02552316211965,
-        "renderCpuMean": 5.343720435209589,
-        "totalCpuMean": 49.977492086828434
+        "durationMs": 23632.14537501335,
+        "fpsMin": 53.48871645787137,
+        "fpsMean": 59.802674750706394,
+        "ramMean": 253.83932783018867,
+        "ramMax": 277.5546875,
+        "jsCpuMean": 6.227308747978507,
+        "jsCpuMax": 26.369168356997974,
+        "uiCpuMean": 24.692397090547363,
+        "renderCpuMean": 4.976023545575154,
+        "totalCpuMean": 49.36227004149347
       },
       "hermes": {
         "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 778
+        "totalUs": 20164484,
+        "events": 1292,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 18624.7
+          },
+          {
+            "module": "Native",
+            "ms": 1248.1
+          },
+          {
+            "module": "react-native",
+            "ms": 192.2
+          },
+          {
+            "module": "JavaScript",
+            "ms": 58.2
+          },
+          {
+            "module": "react",
+            "ms": 27.7
+          },
+          {
+            "module": "@react-native",
+            "ms": 8.2
+          },
+          {
+            "module": "@expo",
+            "ms": 5.3
+          }
+        ]
       }
     },
     "t2": {
       "flashlight": {
         "iterations": 3,
-        "durationMs": 23433.716832876205,
-        "fpsMin": 42.31827111984283,
-        "fpsMean": 59.41701030982439,
-        "ramMean": 257.84873670212767,
-        "ramMax": 278.86328125,
-        "jsCpuMean": 6.826271084875778,
-        "jsCpuMax": 26.369168356997974,
-        "uiCpuMean": 25.189572601793518,
-        "renderCpuMean": 9.585663071202818,
-        "totalCpuMean": 55.60717083383227
+        "durationMs": 24641.54337501526,
+        "fpsMin": 41.9347527950845,
+        "fpsMean": 59.14544673434548,
+        "ramMean": 263.64875,
+        "ramMax": 281.38671875,
+        "jsCpuMean": 6.97123475197553,
+        "jsCpuMax": 25.844930417495032,
+        "uiCpuMean": 23.601962667703496,
+        "renderCpuMean": 9.101872508376381,
+        "totalCpuMean": 52.547832013646406
       },
       "hermes": {
         "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 1080
+        "totalUs": 20154866,
+        "events": 960,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 18860.5
+          },
+          {
+            "module": "Native",
+            "ms": 1060.9
+          },
+          {
+            "module": "react-native",
+            "ms": 204.9
+          },
+          {
+            "module": "Metadata",
+            "ms": 18.5
+          },
+          {
+            "module": "JavaScript",
+            "ms": 10
+          }
+        ]
       }
     },
     "t3": {
       "flashlight": {
         "iterations": 3,
-        "durationMs": 79493.41912484169,
-        "fpsMin": 41.13948919449902,
-        "fpsMean": 59.74567761762427,
-        "ramMean": 258.78127456761007,
-        "ramMax": 278.5234375,
-        "jsCpuMean": 4.366191688368101,
-        "jsCpuMax": 23.25581395348837,
-        "uiCpuMean": 21.715989810741462,
-        "renderCpuMean": 4.305669452476279,
-        "totalCpuMean": 37.802423488399434
+        "durationMs": 77899.54891705513,
+        "fpsMin": 45.101710130077784,
+        "fpsMean": 59.781162487204554,
+        "ramMean": 260.97682291666666,
+        "ramMax": 281.16015625,
+        "jsCpuMean": 4.308091922271589,
+        "jsCpuMax": 26,
+        "uiCpuMean": 21.719460301906114,
+        "renderCpuMean": 4.643503780447322,
+        "totalCpuMean": 38.53191376920834
       },
       "hermes": {
         "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 980
+        "totalUs": 20215311,
+        "events": 880,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 19393
+          },
+          {
+            "module": "Native",
+            "ms": 635.9
+          },
+          {
+            "module": "react-native",
+            "ms": 106.1
+          },
+          {
+            "module": "JavaScript",
+            "ms": 37.1
+          },
+          {
+            "module": "Metadata",
+            "ms": 30.6
+          },
+          {
+            "module": "react-native-safe-area-context",
+            "ms": 12.4
+          },
+          {
+            "module": "react",
+            "ms": 0.2
+          }
+        ]
       }
     }
   },
   "tanstack": {
     "t1": {
-      "flashlight": null,
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 17821.951957941055,
+        "fpsMin": 55.54937563490622,
+        "fpsMean": 59.78027376263717,
+        "ramMean": 255.66221788194446,
+        "ramMax": 282.15625,
+        "jsCpuMean": 8.832116851990461,
+        "jsCpuMax": 29.702970297029704,
+        "uiCpuMean": 22.35773290056496,
+        "renderCpuMean": 8.160007699481373,
+        "totalCpuMean": 52.90123112824216
+      },
       "hermes": {
-        "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 842
+        "libSelfUs": 167820,
+        "totalUs": 20220316,
+        "events": 2272,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 18736.2
+          },
+          {
+            "module": "Native",
+            "ms": 1040.1
+          },
+          {
+            "module": "react-native",
+            "ms": 180.8
+          },
+          {
+            "module": "@tanstack",
+            "ms": 167.8
+          },
+          {
+            "module": "JavaScript",
+            "ms": 63.7
+          },
+          {
+            "module": "Metadata",
+            "ms": 20.9
+          },
+          {
+            "module": "@expo",
+            "ms": 5.9
+          },
+          {
+            "module": "@reduxjs",
+            "ms": 4.9
+          }
+        ]
       }
     },
     "t2": {
-      "flashlight": null,
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 22863.191957950592,
+        "fpsMin": 45.547383876962826,
+        "fpsMean": 59.266786856841186,
+        "ramMean": 261.3995414402174,
+        "ramMax": 280.359375,
+        "jsCpuMean": 7.9506863739370335,
+        "jsCpuMax": 23.80952380952381,
+        "uiCpuMean": 23.561491229859673,
+        "renderCpuMean": 9.282704042181564,
+        "totalCpuMean": 56.18790275057401
+      },
       "hermes": {
-        "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 1392
+        "libSelfUs": 191864,
+        "totalUs": 20250470,
+        "events": 2528,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 18323.5
+          },
+          {
+            "module": "Native",
+            "ms": 1424.5
+          },
+          {
+            "module": "react-native",
+            "ms": 255
+          },
+          {
+            "module": "@tanstack",
+            "ms": 191.9
+          },
+          {
+            "module": "Metadata",
+            "ms": 34
+          },
+          {
+            "module": "JavaScript",
+            "ms": 21.6
+          }
+        ]
       }
     },
     "t3": {
-      "flashlight": null,
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 74747.63916707039,
+        "fpsMin": 45.48253987125112,
+        "fpsMean": 59.768915903719744,
+        "ramMean": 256.8398177083333,
+        "ramMax": 277.125,
+        "jsCpuMean": 4.759255181656084,
+        "jsCpuMax": 25.390625,
+        "uiCpuMean": 22.414664124240936,
+        "renderCpuMean": 4.429548360165977,
+        "totalCpuMean": 40.38829182770742
+      },
       "hermes": {
-        "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 948
+        "libSelfUs": 65615,
+        "totalUs": 20216380,
+        "events": 1120,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 19311.8
+          },
+          {
+            "module": "Native",
+            "ms": 558.4
+          },
+          {
+            "module": "react-native",
+            "ms": 237.2
+          },
+          {
+            "module": "@tanstack",
+            "ms": 65.6
+          },
+          {
+            "module": "JavaScript",
+            "ms": 26.9
+          },
+          {
+            "module": "Metadata",
+            "ms": 9.5
+          },
+          {
+            "module": "@reduxjs",
+            "ms": 6.9
+          }
+        ]
       }
     }
   },
   "rtk": {
     "t1": {
-      "flashlight": null,
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 24286.898582935333,
+        "fpsMin": 47.46349144696627,
+        "fpsMean": 59.749269828939326,
+        "ramMean": 257.134140625,
+        "ramMax": 278.84765625,
+        "jsCpuMean": 11.332541558995425,
+        "jsCpuMax": 33.93213572854291,
+        "uiCpuMean": 24.04469503511518,
+        "renderCpuMean": 5.645533377149047,
+        "totalCpuMean": 55.26189058513562
+      },
       "hermes": {
-        "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 1348
+        "libSelfUs": 614278,
+        "totalUs": 20230711,
+        "events": 3678,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 18561.4
+          },
+          {
+            "module": "Native",
+            "ms": 885.3
+          },
+          {
+            "module": "immer",
+            "ms": 210
+          },
+          {
+            "module": "@reduxjs",
+            "ms": 183.4
+          },
+          {
+            "module": "reselect",
+            "ms": 139.8
+          },
+          {
+            "module": "react-native",
+            "ms": 96.1
+          },
+          {
+            "module": "redux",
+            "ms": 81.2
+          },
+          {
+            "module": "Metadata",
+            "ms": 40.1
+          }
+        ]
       }
     },
     "t2": {
-      "flashlight": null,
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 22183.1741669178,
+        "fpsMin": 43.87865537555686,
+        "fpsMean": 59.296973891456815,
+        "ramMean": 263.334375,
+        "ramMax": 281.5078125,
+        "jsCpuMean": 9.738730166208049,
+        "jsCpuMax": 27.722772277227723,
+        "uiCpuMean": 24.791325027118003,
+        "renderCpuMean": 9.819803298732431,
+        "totalCpuMean": 61.05157723325731
+      },
       "hermes": {
-        "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 638
+        "libSelfUs": 746381,
+        "totalUs": 20200338,
+        "events": 4130,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 18076.9
+          },
+          {
+            "module": "Native",
+            "ms": 1165.4
+          },
+          {
+            "module": "@reduxjs",
+            "ms": 332.6
+          },
+          {
+            "module": "immer",
+            "ms": 203.8
+          },
+          {
+            "module": "redux",
+            "ms": 139.8
+          },
+          {
+            "module": "react-native",
+            "ms": 135.1
+          },
+          {
+            "module": "reselect",
+            "ms": 70.2
+          },
+          {
+            "module": "Metadata",
+            "ms": 32.5
+          }
+        ]
       }
     },
     "t3": {
-      "flashlight": null,
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 80897.09704208374,
+        "fpsMin": 42.37538560885234,
+        "fpsMean": 59.77057683847033,
+        "ramMean": 261.6609519675926,
+        "ramMax": 277.63671875,
+        "jsCpuMean": 5.7518782230259955,
+        "jsCpuMax": 35.785288270377734,
+        "uiCpuMean": 22.2250012218114,
+        "renderCpuMean": 4.473270140794954,
+        "totalCpuMean": 39.56718241836457
+      },
       "hermes": {
-        "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 1130
+        "libSelfUs": 245728,
+        "totalUs": 20248323,
+        "events": 1840,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 19244.3
+          },
+          {
+            "module": "Native",
+            "ms": 585.6
+          },
+          {
+            "module": "@reduxjs",
+            "ms": 121.6
+          },
+          {
+            "module": "react-native",
+            "ms": 101.7
+          },
+          {
+            "module": "immer",
+            "ms": 60.8
+          },
+          {
+            "module": "Metadata",
+            "ms": 47.2
+          },
+          {
+            "module": "reselect",
+            "ms": 32.7
+          },
+          {
+            "module": "redux",
+            "ms": 30.7
+          }
+        ]
       }
     }
   },
   "zustand": {
     "t1": {
-      "flashlight": null,
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 13602.889541864395,
+        "fpsMin": 56.20008100070682,
+        "fpsMean": 59.88823767649138,
+        "ramMean": 248.9221875,
+        "ramMax": 276.265625,
+        "jsCpuMean": 7.6869662327194,
+        "jsCpuMax": 25.948103792415168,
+        "uiCpuMean": 23.131897574840327,
+        "renderCpuMean": 10.280252440622606,
+        "totalCpuMean": 58.07169941152528
+      },
       "hermes": {
         "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 1094
+        "totalUs": 20239279,
+        "events": 1036,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 19098
+          },
+          {
+            "module": "Native",
+            "ms": 885.6
+          },
+          {
+            "module": "react-native",
+            "ms": 185.2
+          },
+          {
+            "module": "Metadata",
+            "ms": 23.2
+          },
+          {
+            "module": "react",
+            "ms": 22.3
+          },
+          {
+            "module": "JavaScript",
+            "ms": 15.2
+          },
+          {
+            "module": "expo",
+            "ms": 9.8
+          }
+        ]
       }
     },
     "t2": {
-      "flashlight": null,
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 22560.791665792465,
+        "fpsMin": 47.27629421961711,
+        "fpsMean": 59.43599075838244,
+        "ramMean": 257.539314516129,
+        "ramMax": 277.4609375,
+        "jsCpuMean": 7.400522970640508,
+        "jsCpuMax": 25.89641434262948,
+        "uiCpuMean": 23.400843830105174,
+        "renderCpuMean": 10.311637448953931,
+        "totalCpuMean": 56.258936287058056
+      },
       "hermes": {
-        "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 1138
+        "libSelfUs": 33380,
+        "totalUs": 20229149,
+        "events": 1846,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 18594.5
+          },
+          {
+            "module": "Native",
+            "ms": 1194.1
+          },
+          {
+            "module": "react-native",
+            "ms": 278.4
+          },
+          {
+            "module": "JavaScript",
+            "ms": 58.9
+          },
+          {
+            "module": "Metadata",
+            "ms": 38.4
+          },
+          {
+            "module": "zustand",
+            "ms": 33.4
+          },
+          {
+            "module": "@expo",
+            "ms": 17.5
+          },
+          {
+            "module": "immer",
+            "ms": 14
+          }
+        ]
       }
     },
     "t3": {
-      "flashlight": null,
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 84331.5903749466,
+        "fpsMin": 41.64739934708392,
+        "fpsMean": 59.79283821296832,
+        "ramMean": 255.51999470338984,
+        "ramMax": 273.6875,
+        "jsCpuMean": 4.4302405851996305,
+        "jsCpuMax": 25.948103792415168,
+        "uiCpuMean": 22.573294737179317,
+        "renderCpuMean": 4.40593625865261,
+        "totalCpuMean": 39.16764573286386
+      },
       "hermes": {
         "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 986
+        "totalUs": 20181754,
+        "events": 1010,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 19117.6
+          },
+          {
+            "module": "Native",
+            "ms": 765.9
+          },
+          {
+            "module": "react-native",
+            "ms": 220.4
+          },
+          {
+            "module": "Metadata",
+            "ms": 42.4
+          },
+          {
+            "module": "JavaScript",
+            "ms": 35.4
+          }
+        ]
       }
     }
   },
   "jotai": {
     "t1": {
-      "flashlight": null,
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 20476.73433303833,
+        "fpsMin": 57.33012855100906,
+        "fpsMean": 59.9024390378734,
+        "ramMean": 256.4823742378049,
+        "ramMax": 280.84375,
+        "jsCpuMean": 8.351477655587798,
+        "jsCpuMax": 25.590551181102363,
+        "uiCpuMean": 24.768138154149643,
+        "renderCpuMean": 5.910859581144115,
+        "totalCpuMean": 54.975220792933214
+      },
       "hermes": {
         "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 1262
+        "totalUs": 20206988,
+        "events": 1526,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 19003.8
+          },
+          {
+            "module": "Native",
+            "ms": 1055.6
+          },
+          {
+            "module": "react-native",
+            "ms": 113.8
+          },
+          {
+            "module": "JavaScript",
+            "ms": 33.8
+          }
+        ]
       }
     },
     "t2": {
-      "flashlight": null,
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 20267.930500030518,
+        "fpsMin": 46.87689740556458,
+        "fpsMean": 59.33127503249937,
+        "ramMean": 254.16739710365854,
+        "ramMax": 272.94140625,
+        "jsCpuMean": 6.647929154095789,
+        "jsCpuMax": 25.89641434262948,
+        "uiCpuMean": 25.301733821253286,
+        "renderCpuMean": 10.480743902506289,
+        "totalCpuMean": 57.38120678017407
+      },
       "hermes": {
-        "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 1100
+        "libSelfUs": 10613,
+        "totalUs": 20430040,
+        "events": 1004,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 19028
+          },
+          {
+            "module": "Native",
+            "ms": 1121.5
+          },
+          {
+            "module": "react-native",
+            "ms": 188.9
+          },
+          {
+            "module": "Metadata",
+            "ms": 45.3
+          },
+          {
+            "module": "JavaScript",
+            "ms": 35.7
+          },
+          {
+            "module": "jotai",
+            "ms": 10.6
+          }
+        ]
       }
     },
     "t3": {
-      "flashlight": null,
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 75817.8298330307,
+        "fpsMin": 41.78137651821862,
+        "fpsMean": 59.70409889062672,
+        "ramMean": 263.7693513569079,
+        "ramMax": 283.86328125,
+        "jsCpuMean": 4.497417955299344,
+        "jsCpuMax": 27.613412228796843,
+        "uiCpuMean": 22.01716257410655,
+        "renderCpuMean": 4.745347510550034,
+        "totalCpuMean": 38.949216592123754
+      },
       "hermes": {
-        "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 1004
+        "libSelfUs": 7079,
+        "totalUs": 20215905,
+        "events": 896,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 19406.3
+          },
+          {
+            "module": "Native",
+            "ms": 513
+          },
+          {
+            "module": "react-native",
+            "ms": 213.7
+          },
+          {
+            "module": "JavaScript",
+            "ms": 63.6
+          },
+          {
+            "module": "Metadata",
+            "ms": 12.3
+          },
+          {
+            "module": "jotai",
+            "ms": 7.1
+          }
+        ]
       }
     }
   },
   "relay": {
     "t1": {
-      "flashlight": null,
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 25092.775959014893,
+        "fpsMin": 54.46500234696127,
+        "fpsMean": 59.75073661667217,
+        "ramMean": 254.78086703431373,
+        "ramMax": 278.25,
+        "jsCpuMean": 10.176281900738447,
+        "jsCpuMax": 30.181086519114686,
+        "uiCpuMean": 24.147163968423175,
+        "renderCpuMean": 5.152851981496751,
+        "totalCpuMean": 51.05809137652945
+      },
       "hermes": {
-        "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 974
+        "libSelfUs": 80442,
+        "totalUs": 20196848,
+        "events": 2152,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 18437.9
+          },
+          {
+            "module": "Native",
+            "ms": 1399.5
+          },
+          {
+            "module": "react-native",
+            "ms": 140.4
+          },
+          {
+            "module": "relay-runtime",
+            "ms": 80.4
+          },
+          {
+            "module": "JavaScript",
+            "ms": 54
+          },
+          {
+            "module": "Metadata",
+            "ms": 44.9
+          },
+          {
+            "module": "react",
+            "ms": 15.7
+          },
+          {
+            "module": "@babel",
+            "ms": 10.6
+          }
+        ]
       }
     },
     "t2": {
-      "flashlight": null,
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 26766.270999908447,
+        "fpsMin": 40.99009900990099,
+        "fpsMean": 59.31262864744297,
+        "ramMean": 259.74956597222223,
+        "ramMax": 276.69921875,
+        "jsCpuMean": 8.959933466559114,
+        "jsCpuMax": 30.67484662576687,
+        "uiCpuMean": 25.18562648483664,
+        "renderCpuMean": 8.640160075218587,
+        "totalCpuMean": 54.86969172256658
+      },
       "hermes": {
-        "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 1150
+        "libSelfUs": 138488,
+        "totalUs": 20269608,
+        "events": 2054,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 18669.5
+          },
+          {
+            "module": "Native",
+            "ms": 1141.7
+          },
+          {
+            "module": "react-native",
+            "ms": 227.8
+          },
+          {
+            "module": "relay-runtime",
+            "ms": 138.5
+          },
+          {
+            "module": "Metadata",
+            "ms": 36
+          },
+          {
+            "module": "JavaScript",
+            "ms": 13.6
+          },
+          {
+            "module": "expo",
+            "ms": 13.1
+          },
+          {
+            "module": "react",
+            "ms": 13
+          }
+        ]
       }
     },
     "t3": {
-      "flashlight": null,
+      "flashlight": {
+        "iterations": 3,
+        "durationMs": 81738.84679198265,
+        "fpsMin": 46.90904068283576,
+        "fpsMean": 59.81408497538471,
+        "ramMean": 257.9912585746951,
+        "ramMax": 277.421875,
+        "jsCpuMean": 5.176895937499752,
+        "jsCpuMax": 30.181086519114686,
+        "uiCpuMean": 21.560322225239716,
+        "renderCpuMean": 4.245936665387286,
+        "totalCpuMean": 38.2632517034499
+      },
       "hermes": {
-        "libSelfUs": 0,
-        "totalUs": 0,
-        "events": 1186
+        "libSelfUs": 88716,
+        "totalUs": 20244822,
+        "events": 1250,
+        "topModules": [
+          {
+            "module": "root",
+            "ms": 19276.4
+          },
+          {
+            "module": "Native",
+            "ms": 637.5
+          },
+          {
+            "module": "react-native",
+            "ms": 149
+          },
+          {
+            "module": "relay-runtime",
+            "ms": 88.7
+          },
+          {
+            "module": "JavaScript",
+            "ms": 63.8
+          },
+          {
+            "module": "Metadata",
+            "ms": 10.9
+          },
+          {
+            "module": "react",
+            "ms": 10.4
+          },
+          {
+            "module": "@babel",
+            "ms": 7.4
+          }
+        ]
       }
     }
   }
