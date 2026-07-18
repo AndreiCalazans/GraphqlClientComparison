@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "scheme": "gqlharness",
     "newArchEnabled": true,
     "plugins": ["./plugins/withColdStartProfiling.js"],
     "ios": {

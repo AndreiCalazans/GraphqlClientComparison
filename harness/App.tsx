@@ -1,7 +1,6 @@
-import { Suspense, useMemo, useState } from 'react';
-import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { Suspense, useEffect, useMemo, useState } from 'react';
+import { ActivityIndicator, Linking, StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import * as Linking from 'expo-linking';
 
 import { DataLayerProvider, LAYERS, resolveVariantId } from './src/data/registry';
 import type { Asset } from './src/data/types';
@@ -20,7 +19,12 @@ type Route =
   | { name: 'signin' };
 
 export default function App() {
-  const initialUrl = Linking.useURL();
+  const [initialUrl, setInitialUrl] = useState<string | null>(null);
+  useEffect(() => {
+    Linking.getInitialURL().then((u) => setInitialUrl(u ?? null)).catch(() => {});
+    const sub = Linking.addEventListener('url', ({ url }) => setInitialUrl(url));
+    return () => sub.remove();
+  }, []);
   const variantId = useMemo(() => resolveVariantId(initialUrl), [initialUrl]);
   const layer = LAYERS[variantId];
 

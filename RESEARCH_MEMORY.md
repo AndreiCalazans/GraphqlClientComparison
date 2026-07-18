@@ -112,12 +112,13 @@ All must render the **identical UI/UX** and exercise identical scenarios.
 - [x] Read README, study all 3 reference projects.
 - [x] Verify Coinbase public GQL endpoint + queries (sections, asset detail).
 - [x] Install Flashlight; confirm device + Maestro.
-- [ ] Scaffold Expo harness app (RN0.86/SDK57), New Arch, Android.
-- [ ] Shared UI: Home (5 sections + balance), Asset detail (+watchlist), Sign-in.
-- [ ] Data-layer registry + 6 implementations (relay, tanstack, rtk, vanilla,
-      zustand, jotai) behind a common interface.
-- [ ] Live-price WS layer (shared transport, per-variant subscription glue).
-- [ ] Wire Hermes profiler plugin + Flashlight + Maestro flows + video.
+- [x] Scaffold Expo harness app (RN0.86/SDK57), New Arch, Android.
+- [x] Shared UI: Home (5 sections + balance), Asset detail (+watchlist), Sign-in.
+- [x] Data-layer registry + 6 implementations (relay, tanstack, rtk, vanilla,
+      zustand, jotai) behind a common interface. Typecheck clean.
+- [x] Live-price WS layer (shared transport, per-variant subscription glue).
+- [x] Wire Hermes profiler plugin (copied withColdStartProfiling) + JS-side
+      coldStartProfiling scheduler. Variant chosen via EXPO_PUBLIC_DATA_LAYER.
 - [ ] Build release APK.
 - [ ] Write 3 Maestro flows × 6 variants; orchestrator script.
 - [ ] Run all, collect Flashlight JSON + Hermes cpuprofiles + videos.
