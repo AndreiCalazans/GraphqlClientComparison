@@ -1,0 +1,40 @@
+{
+  "name": "gql-client-harness",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "start": "expo start",
+    "android": "expo run:android",
+    "ios": "expo run:ios",
+    "web": "expo start --web",
+    "relay": "relay-compiler"
+  },
+  "dependencies": {
+    "@react-navigation/native": "^7.3.8",
+    "@react-navigation/native-stack": "^7.17.10",
+    "@reduxjs/toolkit": "2.12.0",
+    "@tanstack/react-query": "5.101.2",
+    "expo": "~57.0.6",
+    "expo-status-bar": "~57.0.1",
+    "jotai": "2.20.2",
+    "react": "19.2.3",
+    "react-native": "0.86.0",
+    "react-native-release-profiler": "0.4.4",
+    "react-native-safe-area-context": "~5.7.0",
+    "react-native-screens": "4.25.2",
+    "react-redux": "9.3.0",
+    "react-relay": "21.0.1",
+    "relay-runtime": "21.0.1",
+    "zustand": "5.0.14"
+  },
+  "devDependencies": {
+    "@types/react": "~19.2.2",
+    "@types/react-relay": "^18.2.0",
+    "@types/relay-runtime": "^18.2.0",
+    "babel-plugin-relay": "21.0.1",
+    "babel-preset-expo": "^57.0.3",
+    "relay-compiler": "21.0.1",
+    "typescript": "~6.0.3"
+  },
+  "private": true
+}
