@@ -73,3 +73,9 @@ appId: com.perf.gqlharness
     visible:
       id: "home-scroll"
     timeout: 10000
+- tapOn:
+    id: "btn-stop-profiler"
+- extendedWaitUntil:
+    visible:
+      id: "profiler-done"
+    timeout: 15000

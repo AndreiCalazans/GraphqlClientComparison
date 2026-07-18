@@ -37,6 +37,14 @@ function scrollToId(id, timeout = 15000) {
     timeout: ${timeout}
 `;
 }
+// Stop the Hermes profiler and wait until the cpuprofile is written to disk
+// (the `profiler-done` marker flips only after stopProfiling(true) resolves).
+// The host then pulls a fully-written file; the native toast follows ~1 s later.
+function stopProfiler() {
+  return `- tapOn:
+    id: "btn-stop-profiler"
+` + waitId('profiler-done', 15000);
+}
 
 function header(variant) {
   // Cold-start via the variant deep link. We clearState + stopApp first so the
@@ -64,7 +72,8 @@ function test1(variant) {
     `- tapOn:
     id: "btn-back"
 ` +
-    waitId('home-scroll', 10000)
+    waitId('home-scroll', 10000) +
+    stopProfiler()
   );
 }
 
@@ -79,7 +88,8 @@ function test2(variant) {
     id: "row-RECENTLY_LISTED-3"
 ` +
     waitId('detail-scroll', 15000) +
-    waitId('detail-description', 15000)
+    waitId('detail-description', 15000) +
+    stopProfiler()
   );
 }
 
@@ -128,7 +138,8 @@ function test3(variant) {
     `- tapOn:
     id: "btn-back"
 ` +
-    waitId('home-scroll', 10000)
+    waitId('home-scroll', 10000) +
+    stopProfiler()
   );
 }
 

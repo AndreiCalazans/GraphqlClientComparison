@@ -85,7 +85,7 @@ async function main() {
   // Start screen recording in the background.
   const rec = spawn(
     'adb',
-    ['shell', 'screenrecord', '--bit-rate', '6000000', '--time-limit', '60', devVid],
+    ['shell', 'screenrecord', '--bit-rate', '6000000', '--time-limit', '180', devVid],
     { stdio: 'ignore' },
   );
 
@@ -104,16 +104,19 @@ async function main() {
     console.log('  video -> video.mp4');
   } catch { console.log('  (no video pulled)'); }
 
-  // Wait for the Hermes cold-start window to dump (app dumps ~20s after JS entry).
-  console.log('  waiting for Hermes dump…');
+  // The flow taps the stop-profiler button and waits for the `profiler-done`
+  // marker, which flips only AFTER stopProfiling(true) resolves — so the
+  // cpuprofile is already on disk. Poll briefly in case the toast/file lands a
+  // fraction late.
+  console.log('  locating Hermes dump…');
   let prof = '';
-  for (let i = 0; i < 30; i++) {
-    await sleep(1000);
+  for (let i = 0; i < 15; i++) {
     prof = sh(`adb shell ls /sdcard/Download/ 2>/dev/null || true`)
       .split('\n')
       .map((s) => s.trim())
       .find((s) => /sampling-profiler-trace.*\.cpuprofile/.test(s)) || '';
     if (prof) break;
+    await sleep(1000);
   }
   if (prof) {
     const raw = resolve(outDir, 'hermes-raw.cpuprofile.txt');

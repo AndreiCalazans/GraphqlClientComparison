@@ -7,11 +7,13 @@ import type { Asset } from './src/data/types';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { AssetDetailScreen } from './src/screens/AssetDetailScreen';
 import { SignInScreen } from './src/screens/SignInScreen';
-import { scheduleColdStartDump } from './src/perf/coldStartProfiling';
+import { ProfilerControl } from './src/perf/ProfilerControl';
 
-// Start the Hermes cold-start sampling profiler window as early as possible in
-// the JS entry (no-op in dev). The Maestro flow completes inside this window.
-scheduleColdStartDump();
+// The Hermes sampling profiler is enabled natively in MainApplication.onCreate
+// (see plugins/withColdStartProfiling.js), so sampling starts before the JS
+// bundle runs. It is STOPPED on demand by the ProfilerControl button, which the
+// Maestro flow taps at the end of each test — so the WHOLE test window is
+// captured (not a fixed 20 s slice; T3 runs ~80 s).
 
 type Route =
   | { name: 'home' }
@@ -51,6 +53,7 @@ export default function App() {
               <SignInScreen onDone={() => setRoute({ name: 'home' })} />
             ) : null}
           </Suspense>
+          <ProfilerControl />
         </View>
       </DataLayerProvider>
     </SafeAreaProvider>
