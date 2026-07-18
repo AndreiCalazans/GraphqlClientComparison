@@ -139,7 +139,7 @@ export async function fetchAssetDetail(symbol: string): Promise<AssetDetail | nu
     price: Number(a.latestPrice?.price ?? 0),
     marketCap: Number(a.marketCapV2 ?? 0),
     volume24h: Number(a.volume24hV2 ?? 0),
-    volumePercentChange24h: Number(a.volumePercentChange24h ?? a.volumePercentChange24hV2 ?? 0),
+    volumePercentChange24h: Number(a.volumePercentChange24hV2 ?? 0),
     changes: {
       hour: Number(pc.hour ?? 0),
       day: Number(pc.day ?? 0),
